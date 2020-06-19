@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>COVID-19 Tracker</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.21/datatables.min.css"/>
+    <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.21/datatables.min.js"></script>
+
+</head>
+
+<div class="container">
+    <body>
+
+<p class="jumbotron alert alert-primary">
+    <span class="display-3 font-weight-bold">COVID-19 Tracker</span>
+    <span class="display-5 text-muted">Tracks Novel Coronavirus cases from around the world</span>
+</p>
+
+<br>
+
+<div class="card-deck">
+    <div class="card alert alert-warning">
+        <div class="card-body">
+            <h5 class="card-title display-4" th:text="${#numbers.formatInteger(totalReportedCases,3,'COMMA')}"></h5>
+            <p class="card-text">Total confirmed cases as of today.</p>
+        </div>
+    </div>
+    <div class="card alert alert-danger">
+        <div class="card-body">
+            <h5 class="card-title display-4" th:text="${#numbers.formatInteger(totalDeaths,3,'COMMA')}"></h5>
+            <p class="card-text">Total deaths as of today.</p>
+        </div>
+    </div>
+    <div class="card alert alert-success">
+        <div class="card-body">
+            <h5 class="card-title display-4" th:text="${#numbers.formatInteger(totalRecovered,3,'COMMA')}"></h5>
+            <p class="card-text"> Total recovered as of today.</p>
+        </div>
+    </div>
+</div>
+
+<br>
+
+    <table id="myTable" class="table">
+        <tr>
+            <th>State</th>
+            <th>Country</th>
+            <th>Total cases reported</th>
+            <th>New Cases</th>
+            <th>Total Deaths</th>
+            <th>New Deaths</th>
+<!--            <th>Total Recovered</th>-->
+<!--            <th>New Recovered</th>-->
+        </tr>
+        <tr th:each="allStat : ${allStats}">
+            <td th:text="${allStat.state}"></td>
+            <td th:text="${allStat.country}"></td>
+            <td th:text="${allStat.latestTotalCases}">0</td>
+            <td th:text="${allStat.differenceFromPreviousDay}">0</td>
+            <td th:text="${allStat.latestTotalDeath}">0</td>
+            <td th:text="${allStat.deathDifferenceFromPreviousDay}">0</td>
+<!--            <td th:text="${allStat.latestTotalRecovery}">0</td>-->
+<!--            <td th:text="${allStat.recoveryDifferenceFromPreviousDay}">0</td>-->
+        </tr>
+    </table>
+<script>
+    $(document).ready( function () {
+        $('#myTable').DataTable();
+    } );
+</script>
+
+</body>
+</div>
+<p class="jumbotron mb-0">
+    <span class="display-5 text-muted">-Arjit Mishra</span>
+</p>
+</html>
